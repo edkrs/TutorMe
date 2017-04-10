@@ -8,9 +8,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.util.Pair;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -27,6 +29,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.widget.LoginButton;
 import com.facebook.login.LoginResult;
+import com.rebtel.repackaged.com.google.gson.JsonParser;
 
 //import com.sinch.android.rtc.ClientRegistration;
 //import com.sinch.android.rtc.Sinch;
@@ -37,6 +40,8 @@ import com.facebook.login.LoginResult;
 import java.io.IOException;
 import java.lang.InterruptedException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import org.json.JSONException;
@@ -55,6 +60,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         FacebookSDKinitializeDelay();
@@ -142,6 +150,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             String name = response.getJSONObject().getString("name");
                             String fname = name.split(" ")[0];
                             String lname = name.split(" ")[1];
+
+                            List<Pair<String, String>> args = new ArrayList<Pair<String, String>>();
+                            args.add(new Pair("user_fname",fname));
+                            args.add(new Pair("user_lname", lname));
+                            args.add(new Pair("user_id", ID));
+                            JSONParser jsonParser = new JSONParser();
+                            jsonParser.request("http://ec2-54-245-142-221.us-west-2.compute.amazonaws.com/create_User.php", args, "POST");
+                            //http://ec2-54-245-142-221.us-west-2.compute.amazonaws.com/create_User.php
 
                             setGlobalUserData(fname, lname, ID);
                             persistUserData(fname, lname, ID);
