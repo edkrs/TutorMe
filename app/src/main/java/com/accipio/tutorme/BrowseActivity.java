@@ -173,6 +173,8 @@ public class BrowseActivity extends AppCompatActivity implements OnNavigationIte
     private void handleCheckBox() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isTutor = prefs.getBoolean(String.valueOf("isTutor"), false);
+        boolean isAdmin = prefs.getBoolean(String.valueOf("isAdmin"), false);
+        System.out.println("=====================================================" + isAdmin);
 
         if (isTutor) {
             final SwitchCompat status = (SwitchCompat) findViewById(R.id.status);

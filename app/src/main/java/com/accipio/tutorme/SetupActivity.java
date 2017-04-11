@@ -46,6 +46,8 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
 
     private DrawerLayout drawer;
 
+    public CheckBox adminBox;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +85,26 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
         setupBubbleTextViews();
 
         setupNavigationDrawer();
+
+        adminBox = (CheckBox) findViewById(R.id.checkBox2);
+        adminBox.setOnClickListener(new BandaidSolution());
+    }
+
+    public class BandaidSolution implements View.OnClickListener{
+
+        public BandaidSolution(){
+
+        }
+
+        @Override
+        public void onClick(View view) {
+            if(isAdmin){
+                isAdmin = false;
+            }
+            else{
+                isAdmin = true;
+            }
+        }
     }
 
     private void showName() {
