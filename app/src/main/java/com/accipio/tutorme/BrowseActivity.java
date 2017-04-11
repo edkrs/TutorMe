@@ -203,6 +203,21 @@ public class BrowseActivity extends AppCompatActivity implements OnNavigationIte
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     String s = isChecked ? "Available" : "Unavailable";
                     status.setText(s);
+
+                    JSONParser jsonParser = new JSONParser();
+                    String tutorid1 = ((TutorMeApplication) BrowseActivity.this.getApplication()).getID();
+                    List<Pair<String, String>> para = new ArrayList<Pair<String, String>>();
+                    para.add(new Pair("tutor_id", tutorid1));
+                    if (s.equals("Available")){
+                        para.add(new Pair("status", '1'));
+                    }
+                    else if (s.equals("Unavailable")){
+                        para.add(new Pair("status", '0'));
+
+                    }
+                    jsonParser.request("http://ec2-54-245-142-221.us-west-2.compute.amazonaws.com/update_Status.php", para, "POST", "updateStatus");
+
+
                 }
             });
         }
