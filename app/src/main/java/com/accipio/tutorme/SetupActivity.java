@@ -232,7 +232,10 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
     private void restoreInfo() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
+        //////// TODO ADD SHIT TO PULL FROM DATABASE INSTEAD OF LOCAL INFO
+
         for (int id : ids) {
+            
             String text = prefs.getString(String.valueOf(id), "");
             EditText editText = (EditText) findViewById(id);
             if (text != null && !text.isEmpty()) {
@@ -258,6 +261,14 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
             editor.putString(String.valueOf(id), text);
             System.out.println(String.valueOf(id) + " and " + text);
 
+        }
+
+        if (isAdmin){
+            JSONParser jsonParser = new JSONParser();
+            String tutorid1 = ((TutorMeApplication) SetupActivity.this.getApplication()).getID();
+            List<Pair<String, String>> para = new ArrayList<Pair<String, String>>();
+            para.add(new Pair("tutor_id", tutorid1));
+            jsonParser.request("http://ec2-54-245-142-221.us-west-2.compute.amazonaws.com/update_Admin.php", para, "POST", "updateAdmin");
         }
 
 
@@ -287,14 +298,20 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
             EditText editText2 = (EditText) findViewById(R.id.toTeach);
             String textCourses = editText2.getText().toString().replace("\n","");
             String[] courses = textCourses.split(" ");
+
+
             List<Pair<String, String>> arguments = new ArrayList<Pair<String, String>>();
             arguments.add(new Pair("tutor_id", tutorid));
+
+            List<Pair<String, String>> arguments2 = new ArrayList<Pair<String, String>>();
+
             for (String course : courses){
                 arguments.add(new Pair("course_name", course));
+                arguments2.add(new Pair("course_name", course));
             }
+
+            jsonParser.request("http://ec2-54-245-142-221.us-west-2.compute.amazonaws.com/create_Course.php", arguments2, "POST", "createCourse");
             jsonParser.request("http://ec2-54-245-142-221.us-west-2.compute.amazonaws.com/createTutorCourse.php", arguments, "POST", "createTutorCourse");
-
-
 
 
         }
