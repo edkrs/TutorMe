@@ -1,6 +1,9 @@
 package com.accipio.tutorme;
 
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 /**
  * Created by rachel on 2016-11-03.
  */
@@ -8,12 +11,12 @@ public class Tutor {
     private String id;
     private String name;
     private String desc;
-    private String[] courses;
+    private ArrayList<String> courses;
     private float rating;
     private int status;
     private String rate;
 
-    public Tutor(String id, String name, String desc, String[] courses, float rating, int status, String rate) {
+    public Tutor(String id, String name, String desc, ArrayList<String> courses, float rating, int status, String rate) {
         this.id = id;
         this.name = name;
         this.desc = desc;
@@ -35,8 +38,12 @@ public class Tutor {
         return desc;
     }
 
-    public String[] getCourses() {
+    public ArrayList<String> getCourses() {
         return courses;
+    }
+
+    public void addCourse(String courseAdd){
+        this.courses.add(courseAdd);
     }
 
     public float getRating() {

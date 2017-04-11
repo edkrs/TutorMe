@@ -2,6 +2,7 @@ package com.accipio.tutorme;
 
 import android.util.Pair;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,6 +17,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,11 +33,12 @@ public class JSONParser {
 
 
 
-    public void request(String urlString, List<Pair<String, String>> args, String method) {
+    public ArrayList<ArrayList<String>> request(String urlString, List<Pair<String, String>> args, String method) {
         // TODO Auto-generated method stub
 
         System.out.println("Eric stopped 0");
-
+        ArrayList<ArrayList<String>> returns = new ArrayList<ArrayList<String>>();
+        String result = "";
         JSONObject jsonObject = new JSONObject();
         System.out.println("Eric stopped sd");
 
@@ -51,7 +54,7 @@ public class JSONParser {
         System.out.println("Eric stopped 1");
         String message = jsonObject.toString();
         System.out.println(message);
-        StringBuffer chaine = new StringBuffer("");
+        StringBuilder chaine = new StringBuilder();
 
         try{
             URL url = new URL(urlString);
@@ -76,10 +79,14 @@ public class JSONParser {
             connection.connect();
             System.out.println("Eric stopped 4");
 
-            OutputStream outputStream = new BufferedOutputStream(connection.getOutputStream());
-            outputStream.write(message.getBytes());
-            //clean up
-            outputStream.flush();
+            if (method.equals("POST")) {
+                OutputStream outputStream = new BufferedOutputStream(connection.getOutputStream());
+                outputStream.write(message.getBytes());
+                //clean up
+                outputStream.flush();
+                outputStream.close();
+
+            }
             System.out.println("Eric stopped 5");
 
             InputStream inputStream = new BufferedInputStream(connection.getInputStream());
@@ -87,10 +94,30 @@ public class JSONParser {
             BufferedReader rd = new BufferedReader(new InputStreamReader(inputStream));
             String line = "";
             while ((line = rd.readLine()) != null) {
-                System.out.println(chaine);
                 System.out.println("Eric stopped 4=5");
-                chaine.append(line);
+                chaine.append(line + "\n");
             }
+            result = chaine.toString();
+
+
+            JSONArray jsonArray = new JSONArray(result);
+            for (int i =0; i < jsonArray.length(); i++){
+                //JSONObject tempobj = new JSONObject();
+                JSONObject tempobj = (JSONObject)jsonArray.get(i);
+                //System.out.println(tempobj.getString("tutor_id"));
+                ArrayList<String> tempValues = new ArrayList<String>();
+                tempValues.add(tempobj.getString("tutor_id"));
+                tempValues.add((tempobj.getString("user_fname") + " " + (tempobj.getString("user_lname"))));
+                tempValues.add(tempobj.getString("tutor_bio"));
+                tempValues.add(tempobj.getString("course_name"));
+                tempValues.add(tempobj.getString("tutor_rating"));
+                tempValues.add(tempobj.getString("tutor_status"));
+                tempValues.add(tempobj.getString("tutor_price"));
+                returns.add(tempValues);
+            }
+            System.out.println(result);
+
+
 
 
 
@@ -98,17 +125,19 @@ public class JSONParser {
             InputStream inputStream = connection.getInputStream();
 
             */
-            outputStream.close();
             inputStream.close();
             connection.disconnect();
         }
         catch (IOException e) {
             // Writing exception to log
             e.printStackTrace();
-        }finally {
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } finally {
 
         }
 
-        //return chaine;
+        return returns;
     }
+
 }

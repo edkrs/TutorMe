@@ -137,8 +137,8 @@ public class TutorsAdapter extends RecyclerView.Adapter<TutorsAdapter.TutorViewH
                     for (Tutor item : mDataSet) {
                         if ((Integer.parseInt(item.getRate()) <= rateNum) && (item.getRating() >= ratingNum) && (item.getStatus() >= status)) {
                             if (!none) {
-                                for (int i = 0; i < item.getCourses().length; i++) {
-                                    if (item.getCourses()[i].toLowerCase().equals(courseStr)) {
+                                for (int i = 0; i < item.getCourses().size(); i++) {
+                                    if (item.getCourses().get(i).toLowerCase().equals(courseStr)) {
                                         FilteredArrList.add(item);
                                     }
                                 }

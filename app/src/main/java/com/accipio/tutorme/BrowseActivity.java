@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -17,6 +18,7 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
 import android.support.v7.widget.SwitchCompat;
 import android.transition.TransitionManager;
+import android.util.Pair;
 import android.view.MenuItem;
 import android.view.Gravity;
 import android.view.View;
@@ -33,6 +35,8 @@ import android.view.LayoutInflater;
 import com.facebook.login.LoginManager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -47,6 +51,9 @@ public class BrowseActivity extends AppCompatActivity implements OnNavigationIte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         setContentView(R.layout.activity_browse);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -118,21 +125,39 @@ public class BrowseActivity extends AppCompatActivity implements OnNavigationIte
     private TutorsAdapter populateList(RecyclerView recycler) {
         ArrayList<Tutor> tutors = new ArrayList<>();
         // Test data
-        tutors.add(new Tutor("000000", "Fred Riley", "Grad student of Chemistry", new String[] {"CHEM210", "CHEM", "CHEMISTRY"}, 4.1f, 0, "20"));
-        tutors.add(new Tutor("111111", "Clarence McCoy", "Professional math tutor", new String[] {"MATH", "MATH211", "MATH271", "MATH"}, 3.0f, 1, "35"));
-        tutors.add(new Tutor("222222", "Karl Wells", "4th year Science, A- student", new String[] {"SCIENCE", "CHEM210"}, 5.0f, 1, "15"));
-        tutors.add(new Tutor("333333", "Arlene Ruiz", "3rd year studying Business", new String[] {"FNCE317", "ACCT217", "ACCT301"}, -1, 0, "20"));
-        tutors.add(new Tutor("444444", "Jay Owens", "Professional tutor, specializing in Electrical Engineering", new String[] {"ENGG", "ENEL300", "ENEL"}, 3.9f, 0, "50"));
-        tutors.add(new Tutor("555555", "Allen Chambers", "Teaching math, stats, econ, and more", new String[] {"MATH", "STATS", "ECON201", "ECON203"}, -1, 0, "10"));
-        tutors.add(new Tutor("666666", "Kendra Rodriguez", "Masters student in Computer Science", new String[] {"CPSC", "CPSC231", "CPSC233", "CPSC331", "CPSC441"}, 4.5f, 1, "30"));
-        tutors.add(new Tutor("777777", "Robert Chan", "Professional tutor, TA'd many CPSC courses", new String[] {"CPSC", "CPSC", "CPSC217", "CPSC219", "CPSC235"}, -1, 1, "40"));
-        tutors.add(new Tutor("888888", "Shawn Ingram", "Studying Physics", new String[] {"PHYSICS", "PHYS211", "PHYS221"}, 5.0f, 1, "10"));
-        tutors.add(new Tutor("999999", "Melody Fletcher", "English and languages", new String[] {"ENGL201", "ENGL301", "FRENCH", "GERMAN"}, 3.5f, 0, "25"));
-        tutors.add(new Tutor("123345", "Matt Smith", "TA for stats, cpsc, and math", new String[] {"MATH211", "MATH249", "MATH271", "STAT213", "STAT205", "CPSC", "CPSC231"}, 3.3f, 0, "20"));
-        tutors.add(new Tutor("234567", "Roland Byrd", "Economics & business tutor, 4.0 GPA", new String[] {"ECON201", "MKTG317", "FINANCE"}, -1, 1, "15"));
-        tutors.add(new Tutor("345678", "Caleb Bennet", "Need help with any math course? Contact me!", new String[] {"MATH", "MATH211", "MATH249", "MATH267", "MATH311"}, 2.0f, 1, "10"));
-        tutors.add(new Tutor("456789", "Linh Cybulski", "Grad student, excellent tutor", new String[] {"MATH", "STATS205", "STATS", "ECON", "ENGG"}, 3.0f, 0, "10"));
-        tutors.add(new Tutor("567890", "Eduardo Kahle", "Math and chem - help with assignments, studying", new String[] {"MATH211", "MATH271", "MATH249", "CHEM213", "CHEM"}, -1, 1, "10"));
+        tutors.add(new Tutor("000000", "Fred Riley", "Grad student of Chemistry", new ArrayList<String>(Arrays.asList("CHEM210", "CHEM", "CHEMISTRY")), 4.1f, 0, "20"));
+        tutors.add(new Tutor("111111", "Clarence McCoy", "Professional math tutor",new ArrayList<String>(Arrays.asList("MATH", "MATH211", "MATH271", "MATH")), 3.0f, 1, "35"));
+        tutors.add(new Tutor("222222", "Karl Wells", "4th year Science, A- student",new ArrayList<String>(Arrays.asList("SCIENCE", "CHEM210")), 5.0f, 1, "15"));
+        tutors.add(new Tutor("333333", "Arlene Ruiz", "3rd year studying Business", new ArrayList<String>(Arrays.asList("FNCE317", "ACCT217", "ACCT301")), -1, 0, "20"));
+        tutors.add(new Tutor("444444", "Jay Owens", "Professional tutor, specializing in Electrical Engineering", new ArrayList<String>(Arrays.asList("ENGG", "ENEL300", "ENEL")), 3.9f, 0, "50"));
+        tutors.add(new Tutor("555555", "Allen Chambers", "Teaching math, stats, econ, and more",new ArrayList<String>(Arrays.asList("MATH", "STATS", "ECON201", "ECON203")), -1, 0, "10"));
+        tutors.add(new Tutor("666666", "Kendra Rodriguez", "Masters student in Computer Science",new ArrayList<String>(Arrays.asList("CPSC", "CPSC231", "CPSC233", "CPSC331", "CPSC441")), 4.5f, 1, "30"));
+        tutors.add(new Tutor("777777", "Robert Chan", "Professional tutor, TA'd many CPSC courses", new ArrayList<String>(Arrays.asList("CPSC", "CPSC", "CPSC217", "CPSC219", "CPSC235")), -1, 1, "40"));
+        tutors.add(new Tutor("888888", "Shawn Ingram", "Studying Physics", new ArrayList<String>(Arrays.asList("PHYSICS", "PHYS211", "PHYS221")), 5.0f, 1, "10"));
+        tutors.add(new Tutor("999999", "Melody Fletcher", "English and languages",new ArrayList<String>(Arrays.asList("ENGL201", "ENGL301", "FRENCH", "GERMAN")), 3.5f, 0, "25"));
+
+
+        JSONParser jsonParser = new JSONParser();
+        List<Pair<String, String>> args = new ArrayList<Pair<String, String>>();
+        args.add(new Pair("",""));
+        ArrayList<ArrayList<String>> tutorsList = new ArrayList<ArrayList<String>>();
+        tutorsList = jsonParser.request("http://ec2-54-245-142-221.us-west-2.compute.amazonaws.com/getAllTutors.php",args, "GET" );
+
+        for (ArrayList<String> innerList : tutorsList){
+            //testing if adding courses, not new tutor
+            for (Tutor currentTutors: tutors){
+                if (currentTutors.getId().equals(innerList.get(0))){
+                    currentTutors.addCourse(innerList.get(3));
+                }
+            }
+            ///////////////
+
+            tutors.add( new Tutor(innerList.get(0),innerList.get(1),innerList.get(2), new ArrayList<String>(Arrays.asList(innerList.get(3))), new Float(innerList.get(4)), new Integer(innerList.get(5)), innerList.get(6)));
+
+
+        }
+
+
         TutorsAdapter adapter = new TutorsAdapter(tutors);
         return adapter;
     }
