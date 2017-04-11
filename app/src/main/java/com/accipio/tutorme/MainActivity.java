@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         facebookLogin = (LoginButton)findViewById(R.id.fb_login);
         registerLoginCallback(facebookLogin);
 
+
 // TODO: Fix
 //        // Instantiate a SinchClient using the SinchClientBuilder.
 //        android.content.Context context = this.getApplicationContext();
@@ -119,7 +120,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        //Start this after login
 //        sinchClient.start();
     }
+/*
+    public class BandaidSolution implements View.OnClickListener{
 
+        @Override
+        public void onClick(View view) {
+            EditText fname = (EditText) findViewById(R.id.username);
+            EditText lname = (EditText) findViewById(R.id.password);
+            if((fname.getText() == null) || (lname.getText() == null)){
+                // Do nothing because nothing is in the fields
+            }
+            else{
+
+
+            }
+        }
+    }
+*/
     private void registerLoginCallback(LoginButton loginButton) {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override

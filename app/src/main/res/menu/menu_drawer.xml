@@ -20,6 +20,12 @@
             android:icon="@drawable/settings"
             android:title="My Settings" />
         <item
+            android:id="@+id/drawer_transactions"
+            android:checked="true"
+            android:fontFamily="sans-serif-light"
+            android:icon="@drawable/settings"
+            android:title="My Transactions" />
+        <item
             android:id="@+id/drawer_messages"
             android:checked="true"
             android:fontFamily="sans-serif-light"

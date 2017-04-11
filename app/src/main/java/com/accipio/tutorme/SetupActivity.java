@@ -40,6 +40,8 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
 
     private boolean isTutor;
 
+    private boolean isAdmin;
+
     private int[] ids = {R.id.email, R.id.toLearn, R.id.toTeach, R.id.description, R.id.rate};
 
     private DrawerLayout drawer;
@@ -237,6 +239,7 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
         }
 
 
+
         if (isTutor) {
 
             JSONParser jsonParser = new JSONParser();
@@ -282,6 +285,7 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
         ((TutorMeApplication) SetupActivity.this.getApplication()).setEmail(email);
         ((TutorMeApplication) SetupActivity.this.getApplication()).setTutor(isTutor);
         editor.putBoolean("isTutor", isTutor);
+        editor.putBoolean("isAdmin", isAdmin);
 
 
 

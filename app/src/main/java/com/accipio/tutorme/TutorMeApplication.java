@@ -2,6 +2,7 @@ package com.accipio.tutorme;
 
 import android.app.Application;
 import android.graphics.Bitmap;
+import android.provider.ContactsContract;
 
 
 /**
@@ -12,9 +13,9 @@ public class TutorMeApplication extends Application {
     private String userID;
     private String firstName;
     private String lastName;
-    private String email;
     private boolean tutor = false;
     private Bitmap image;
+    private String email;
 
     public String getID() {
         return userID;
@@ -40,14 +41,6 @@ public class TutorMeApplication extends Application {
         lastName = lname;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String address) {
-        email = address;
-    }
-
     public boolean isTutor() {
         return tutor;
     }
@@ -63,4 +56,8 @@ public class TutorMeApplication extends Application {
     public Bitmap getImage() {
         return image;
     }
+
+    public String getEmail(){ return email; }
+
+    public void setEmail(String newEmail){ email = newEmail; }
 }

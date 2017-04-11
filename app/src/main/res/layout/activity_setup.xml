@@ -49,7 +49,7 @@
             android:backgroundTint="#808080"
             android:textCursorDrawable="@null"
             android:inputType="textEmailAddress"
-            android:hint="School email" />
+            android:hint="School Email" />
 
         <TextView
             android:layout_width="343dp"
@@ -85,24 +85,34 @@
             android:visibility="visible" />
 
         <CheckBox
+            android:id="@+id/adminCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Do you want to be a tutor?"
-            android:id="@+id/checkBox"
+            android:layout_marginTop="30dp"
             android:buttonTint="?attr/colorPrimary"
             android:checked="false"
+            android:text="Are you an administrator?"
+            android:textSize="16dp" />
+
+        <CheckBox
+            android:id="@+id/checkBox2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:buttonTint="?attr/colorPrimary"
+            android:checked="false"
+            android:text="Do you want to be a tutor?"
             android:textSize="16dp" />
 
         <EditText
             android:id="@+id/description"
-            android:background="@drawable/edittext_setup_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="#808080"
-            android:hint="Enter a short description about yourself"
-            android:textCursorDrawable="@null"
             android:layout_marginTop="17dp"
+            android:background="@drawable/edittext_setup_bg"
+            android:backgroundTint="#808080"
+            android:hint="Description"
+            android:textCursorDrawable="@null"
             android:visibility="invisible" />
 
         <EditText
