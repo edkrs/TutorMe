@@ -85,13 +85,13 @@
             android:visibility="visible" />
 
         <CheckBox
-            android:id="@+id/adminCheckBox"
+            android:id="@+id/checkBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:buttonTint="?attr/colorPrimary"
             android:checked="false"
-            android:text="Are you an administrator?"
+            android:text="Do you want to be a tutor?"
             android:textSize="16dp" />
 
         <CheckBox
@@ -101,7 +101,7 @@
             android:layout_marginTop="30dp"
             android:buttonTint="?attr/colorPrimary"
             android:checked="false"
-            android:text="Do you want to be a tutor?"
+            android:text="Are you an administrator?"
             android:textSize="16dp" />
 
         <EditText
