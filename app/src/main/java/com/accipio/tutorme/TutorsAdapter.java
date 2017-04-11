@@ -22,18 +22,29 @@ public class TutorsAdapter extends RecyclerView.Adapter<TutorsAdapter.TutorViewH
     protected ArrayList<Tutor> mDataSet;
     protected ArrayList<Tutor> filteredList;
     protected ArrayList<Tutor> original;
+    protected boolean isAdmin;
 
-    public TutorsAdapter(ArrayList<Tutor> mDataSet) {
+    public TutorsAdapter(ArrayList<Tutor> mDataSet, boolean admin) {
         this.mDataSet = mDataSet;
         this.original = mDataSet;
         this.filteredList = mDataSet;
+        this.isAdmin = admin;
     }
 
     @Override
     public TutorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout, parent, false);
-        TutorViewHolder tutorViewHolder = new TutorViewHolder(v);
-        return tutorViewHolder;
+        if(isAdmin){
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout_admin, parent, false);
+            TutorViewHolder tutorViewHolder = new TutorViewHolder(v);
+            return tutorViewHolder;
+
+        }
+        else{
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout, parent, false);
+            TutorViewHolder tutorViewHolder = new TutorViewHolder(v);
+            return tutorViewHolder;
+        }
+
     }
 
     @Override
@@ -62,13 +73,28 @@ public class TutorsAdapter extends RecyclerView.Adapter<TutorsAdapter.TutorViewH
 
         TutorViewHolder(View itemView) {
             super(itemView);
-            cardView = (CardView) itemView.findViewById(R.id.browse_layout);
-            icon = (TextView) itemView.findViewById(R.id.icon);
-            name = (TextView) itemView.findViewById(R.id.name);
-            desc = (TextView) itemView.findViewById(R.id.desc);
-            rate = (TextView) itemView.findViewById(R.id.rate);
-            rating = (RatingBar) itemView.findViewById(R.id.rating);
+            if(isAdmin){
+
+                cardView = (CardView) itemView.findViewById(R.id.browse_layout);
+                icon = (TextView) itemView.findViewById(R.id.icon2);
+                name = (TextView) itemView.findViewById(R.id.name2);
+                desc = (TextView) itemView.findViewById(R.id.desc2);
+                rate = (TextView) itemView.findViewById(R.id.rate2);
+                rating = (RatingBar) itemView.findViewById(R.id.rating2);
+            }
+            else {
+
+
+                cardView = (CardView) itemView.findViewById(R.id.browse_layout);
+                icon = (TextView) itemView.findViewById(R.id.icon);
+                name = (TextView) itemView.findViewById(R.id.name);
+                desc = (TextView) itemView.findViewById(R.id.desc);
+                rate = (TextView) itemView.findViewById(R.id.rate);
+                rating = (RatingBar) itemView.findViewById(R.id.rating);
+            }
         }
+
+
     }
 
     @Override

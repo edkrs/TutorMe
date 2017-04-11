@@ -44,6 +44,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class BrowseActivity extends AppCompatActivity implements OnNavigationItemSelectedListener {
 
     DrawerLayout drawer;
+    boolean admin;
 
     public RecyclerView recycler;
     public TutorsAdapter adapter;
@@ -58,6 +59,7 @@ public class BrowseActivity extends AppCompatActivity implements OnNavigationIte
         setContentView(R.layout.activity_browse);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
+        admin = false;
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(false);
@@ -70,10 +72,14 @@ public class BrowseActivity extends AppCompatActivity implements OnNavigationIte
         recycler.setLayoutManager(layoutManager);
         recycler.setHasFixedSize(false);
 
-        adapter = populateList(recycler);
-        recycler.setAdapter(adapter);
-
         handleCheckBox();
+
+        // This is the functionality to change the list between the admin and basic user.
+
+            adapter = populateList(recycler);
+            recycler.setAdapter(adapter);
+
+
 
         setupNavigationDrawer();
     }
@@ -166,15 +172,29 @@ public class BrowseActivity extends AppCompatActivity implements OnNavigationIte
         }
 
 
-        TutorsAdapter adapter = new TutorsAdapter(tutors);
-        return adapter;
+            TutorsAdapter adapter = new TutorsAdapter(tutors , admin);
+            return adapter;
+
+    }
+
+
+
+    public class BandAidBro implements View.OnClickListener{
+
+        @Override
+        public void onClick(View view) {
+
+        }
     }
 
     private void handleCheckBox() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isTutor = prefs.getBoolean(String.valueOf("isTutor"), false);
         boolean isAdmin = prefs.getBoolean(String.valueOf("isAdmin"), false);
-        System.out.println("=====================================================" + isAdmin);
+        if(isAdmin){
+            admin = true;
+        }
+
 
         if (isTutor) {
             final SwitchCompat status = (SwitchCompat) findViewById(R.id.status);

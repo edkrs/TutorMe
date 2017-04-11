@@ -86,6 +86,9 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
 
         setupNavigationDrawer();
 
+        // Initialization
+        isAdmin = false;
+
         adminBox = (CheckBox) findViewById(R.id.checkBox2);
         adminBox.setOnClickListener(new BandaidSolution());
     }
@@ -293,8 +296,6 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
                 arguments.add(new Pair("course_name", course));
             }
             jsonParser.request("http://ec2-54-245-142-221.us-west-2.compute.amazonaws.com/createTutorCourse.php", arguments, "POST", "createTutorCourse");
-
-
 
 
         }
