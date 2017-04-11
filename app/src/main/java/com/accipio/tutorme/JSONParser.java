@@ -33,7 +33,7 @@ public class JSONParser {
 
 
 
-    public ArrayList<ArrayList<String>> request(String urlString, List<Pair<String, String>> args, String method) {
+    public ArrayList<ArrayList<String>> request(String urlString, List<Pair<String, String>> args, String method, String why) {
         // TODO Auto-generated method stub
 
         System.out.println("Eric stopped 0");
@@ -99,23 +99,24 @@ public class JSONParser {
             }
             result = chaine.toString();
 
-
-            JSONArray jsonArray = new JSONArray(result);
-            for (int i =0; i < jsonArray.length(); i++){
-                //JSONObject tempobj = new JSONObject();
-                JSONObject tempobj = (JSONObject)jsonArray.get(i);
-                //System.out.println(tempobj.getString("tutor_id"));
-                ArrayList<String> tempValues = new ArrayList<String>();
-                tempValues.add(tempobj.getString("tutor_id"));
-                tempValues.add((tempobj.getString("user_fname") + " " + (tempobj.getString("user_lname"))));
-                tempValues.add(tempobj.getString("tutor_bio"));
-                tempValues.add(tempobj.getString("course_name"));
-                tempValues.add(tempobj.getString("tutor_rating"));
-                tempValues.add(tempobj.getString("tutor_status"));
-                tempValues.add(tempobj.getString("tutor_price"));
-                returns.add(tempValues);
+            if (why.equals("getTutors")) {
+                JSONArray jsonArray = new JSONArray(result);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    //JSONObject tempobj = new JSONObject();
+                    JSONObject tempobj = (JSONObject) jsonArray.get(i);
+                    //System.out.println(tempobj.getString("tutor_id"));
+                    ArrayList<String> tempValues = new ArrayList<String>();
+                    tempValues.add(tempobj.getString("tutor_id"));
+                    tempValues.add((tempobj.getString("user_fname") + " " + (tempobj.getString("user_lname"))));
+                    tempValues.add(tempobj.getString("tutor_bio"));
+                    tempValues.add(tempobj.getString("course_name"));
+                    tempValues.add(tempobj.getString("tutor_rating"));
+                    tempValues.add(tempobj.getString("tutor_status"));
+                    tempValues.add(tempobj.getString("tutor_price"));
+                    returns.add(tempValues);
+                }
+                System.out.println(result);
             }
-            System.out.println(result);
 
 
 

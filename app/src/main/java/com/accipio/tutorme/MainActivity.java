@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             args.add(new Pair("user_lname", lname));
                             args.add(new Pair("user_id", ID));
                             JSONParser jsonParser = new JSONParser();
-                            jsonParser.request("http://ec2-54-245-142-221.us-west-2.compute.amazonaws.com/create_User.php", args, "POST");
+                            jsonParser.request("http://ec2-54-245-142-221.us-west-2.compute.amazonaws.com/create_User.php", args, "POST", "stuff");
                             //http://ec2-54-245-142-221.us-west-2.compute.amazonaws.com/create_User.php
 
                             setGlobalUserData(fname, lname, ID);

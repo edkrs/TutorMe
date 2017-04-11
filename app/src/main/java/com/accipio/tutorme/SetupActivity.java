@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
@@ -12,6 +13,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Pair;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +24,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -42,6 +47,9 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setFontAttrId(R.attr.fontPath)
@@ -218,17 +226,65 @@ public class SetupActivity extends AppCompatActivity implements View.OnClickList
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(SetupActivity.this);
         SharedPreferences.Editor editor = prefs.edit();
 
+
+
         for (int id : ids) {
             EditText editText = (EditText) findViewById(id);
             String text = editText.getText().toString();
             editor.putString(String.valueOf(id), text);
+            System.out.println(String.valueOf(id) + " and " + text);
+
         }
+
+
+        if (isTutor) {
+
+            JSONParser jsonParser = new JSONParser();
+            List<Pair<String, String>> args = new ArrayList<Pair<String, String>>();
+            String tutorid = ((TutorMeApplication) SetupActivity.this.getApplication()).getID();
+
+            EditText editText = (EditText) findViewById(R.id.description);
+            String textDescription = editText.getText().toString().replace("\n", "");
+            EditText editText1 = (EditText) findViewById(R.id.rate);
+            String textPrice = editText1.getText().toString();
+
+
+
+
+            System.out.println(textDescription + " and THIS IS " + textPrice);
+
+            args.add(new Pair("tutor_id", tutorid ));
+            args.add(new Pair("tutor_price", textPrice));
+            args.add(new Pair("tutor_bio", textDescription));
+
+            jsonParser.request("http://ec2-54-245-142-221.us-west-2.compute.amazonaws.com/create_Tutor.php", args, "POST", "createTutor");
+
+            EditText editText2 = (EditText) findViewById(R.id.toTeach);
+            String textCourses = editText2.getText().toString().replace("\n","");
+            String[] courses = textCourses.split(" ");
+            List<Pair<String, String>> arguments = new ArrayList<Pair<String, String>>();
+            arguments.add(new Pair("tutor_id", tutorid));
+            for (String course : courses){
+                arguments.add(new Pair("course_name", course));
+            }
+            jsonParser.request("http://ec2-54-245-142-221.us-west-2.compute.amazonaws.com/createTutorCourse.php", arguments, "POST", "createTutorCourse");
+
+
+
+
+        }
+
+
+
 
         //TODO: take this out after log out is removed
         String email = ((EditText) findViewById(R.id.email)).getText().toString();
         ((TutorMeApplication) SetupActivity.this.getApplication()).setEmail(email);
         ((TutorMeApplication) SetupActivity.this.getApplication()).setTutor(isTutor);
         editor.putBoolean("isTutor", isTutor);
+
+
+
 
         editor.apply();
     }

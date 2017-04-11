@@ -141,18 +141,26 @@ public class BrowseActivity extends AppCompatActivity implements OnNavigationIte
         List<Pair<String, String>> args = new ArrayList<Pair<String, String>>();
         args.add(new Pair("",""));
         ArrayList<ArrayList<String>> tutorsList = new ArrayList<ArrayList<String>>();
-        tutorsList = jsonParser.request("http://ec2-54-245-142-221.us-west-2.compute.amazonaws.com/getAllTutors.php",args, "GET" );
+        tutorsList = jsonParser.request("http://ec2-54-245-142-221.us-west-2.compute.amazonaws.com/getAllTutors.php",args, "GET", "getTutors" );
 
+        boolean equal = false;
         for (ArrayList<String> innerList : tutorsList){
             //testing if adding courses, not new tutor
             for (Tutor currentTutors: tutors){
+                System.out.println(currentTutors.getId() + " = " + innerList.get(0));
                 if (currentTutors.getId().equals(innerList.get(0))){
+                    equal = true;
+                    System.out.println("same tutor, adding courses");
                     currentTutors.addCourse(innerList.get(3));
                 }
+                System.out.println("equal is " + equal);
             }
             ///////////////
-
-            tutors.add( new Tutor(innerList.get(0),innerList.get(1),innerList.get(2), new ArrayList<String>(Arrays.asList(innerList.get(3))), new Float(innerList.get(4)), new Integer(innerList.get(5)), innerList.get(6)));
+            if (!equal) {
+                tutors.add(new Tutor(innerList.get(0), innerList.get(1), innerList.get(2), new ArrayList<String>(Arrays.asList(innerList.get(3))), new Float(innerList.get(4)), new Integer(innerList.get(5)), innerList.get(6)));
+                System.out.println("Added tutor from db -> " +  innerList.get(0) );
+            }
+            equal = false;
 
 
         }
