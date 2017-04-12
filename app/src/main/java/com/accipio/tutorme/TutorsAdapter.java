@@ -4,17 +4,21 @@ package com.accipio.tutorme;
  * Created by rachel on 2016-11-03.
  */
 
+import android.os.StrictMode;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class TutorsAdapter extends RecyclerView.Adapter<TutorsAdapter.TutorViewHolder> implements Filterable {
@@ -33,6 +37,10 @@ public class TutorsAdapter extends RecyclerView.Adapter<TutorsAdapter.TutorViewH
 
     @Override
     public TutorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         if(isAdmin){
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_layout_admin, parent, false);
             TutorViewHolder tutorViewHolder = new TutorViewHolder(v);
@@ -66,15 +74,40 @@ public class TutorsAdapter extends RecyclerView.Adapter<TutorsAdapter.TutorViewH
         return 0;
     }
 
+    public class BandaidSOln implements View.OnClickListener{
+
+        public int id;
+        public String tutorId;
+        public BandaidSOln(int idAYY){
+            //tutorId = filteredList.get(idAYY).getId();
+            id = idAYY;
+            JSONParser jsonParser = new JSONParser();
+            List<Pair<String, String>> para = new ArrayList<Pair<String, String>>();
+            para.add(new Pair("tutor_id", id));
+            jsonParser.request("http://ec2-54-245-142-221.us-west-2.compute.amazonaws.com/delete_Tutor.php", para, "POST", "delete_Tutor");
+            System.out.println(id);
+
+        }
+
+
+        @Override
+        public void onClick(View view) {
+            System.out.println("pressed -------------------------------");
+        }
+    }
     public class TutorViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         TextView icon, name, desc, rate;
         RatingBar rating;
+        Button delete;
+
 
         TutorViewHolder(View itemView) {
             super(itemView);
-            if(isAdmin){
 
+            if(isAdmin){
+                delete = (Button)  itemView.findViewById(R.id.deleteButton);
+                delete.setOnClickListener(new BandaidSOln(new Integer(filteredList.get(0).getId())));
                 cardView = (CardView) itemView.findViewById(R.id.browse_layout);
                 icon = (TextView) itemView.findViewById(R.id.icon2);
                 name = (TextView) itemView.findViewById(R.id.name2);

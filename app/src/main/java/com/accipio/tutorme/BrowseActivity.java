@@ -131,17 +131,6 @@ public class BrowseActivity extends AppCompatActivity implements OnNavigationIte
     private TutorsAdapter populateList(RecyclerView recycler) {
         ArrayList<Tutor> tutors = new ArrayList<>();
         // Test data
-        tutors.add(new Tutor("000000", "Fred Riley", "Grad student of Chemistry", new ArrayList<String>(Arrays.asList("CHEM210", "CHEM", "CHEMISTRY")), 4.1f, 0, "20"));
-        tutors.add(new Tutor("111111", "Clarence McCoy", "Professional math tutor",new ArrayList<String>(Arrays.asList("MATH", "MATH211", "MATH271", "MATH")), 3.0f, 1, "35"));
-        tutors.add(new Tutor("222222", "Karl Wells", "4th year Science, A- student",new ArrayList<String>(Arrays.asList("SCIENCE", "CHEM210")), 5.0f, 1, "15"));
-        tutors.add(new Tutor("333333", "Arlene Ruiz", "3rd year studying Business", new ArrayList<String>(Arrays.asList("FNCE317", "ACCT217", "ACCT301")), -1, 0, "20"));
-        tutors.add(new Tutor("444444", "Jay Owens", "Professional tutor, specializing in Electrical Engineering", new ArrayList<String>(Arrays.asList("ENGG", "ENEL300", "ENEL")), 3.9f, 0, "50"));
-        tutors.add(new Tutor("555555", "Allen Chambers", "Teaching math, stats, econ, and more",new ArrayList<String>(Arrays.asList("MATH", "STATS", "ECON201", "ECON203")), -1, 0, "10"));
-        tutors.add(new Tutor("666666", "Kendra Rodriguez", "Masters student in Computer Science",new ArrayList<String>(Arrays.asList("CPSC", "CPSC231", "CPSC233", "CPSC331", "CPSC441")), 4.5f, 1, "30"));
-        tutors.add(new Tutor("777777", "Robert Chan", "Professional tutor, TA'd many CPSC courses", new ArrayList<String>(Arrays.asList("CPSC", "CPSC", "CPSC217", "CPSC219", "CPSC235")), -1, 1, "40"));
-        tutors.add(new Tutor("888888", "Shawn Ingram", "Studying Physics", new ArrayList<String>(Arrays.asList("PHYSICS", "PHYS211", "PHYS221")), 5.0f, 1, "10"));
-        tutors.add(new Tutor("999999", "Melody Fletcher", "English and languages",new ArrayList<String>(Arrays.asList("ENGL201", "ENGL301", "FRENCH", "GERMAN")), 3.5f, 0, "25"));
-
 
         JSONParser jsonParser = new JSONParser();
         List<Pair<String, String>> args = new ArrayList<Pair<String, String>>();
